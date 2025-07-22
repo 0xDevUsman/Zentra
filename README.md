@@ -1,4 +1,4 @@
-# Zentra — Modern AI ChatBot Frontend
+# Zentra — Modern AI ChatBot
 
 Zentra is a sleek, creative, and responsive AI ChatBot frontend inspired by ChatGPT and DeepSeek, designed with an emphasis on modern UI/UX and smooth user experience. It supports dark mode by default with light mode toggle, animated chat interactions, and personality-based AI responses.
 

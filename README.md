@@ -1,56 +1,43 @@
-# Zentra — Modern AI ChatBot
+# Zentra – Full-Stack AI ChatBot with Stunning UI
 
-Zentra is a sleek, creative, and responsive AI ChatBot frontend inspired by ChatGPT and DeepSeek, designed with an emphasis on modern UI/UX and smooth user experience. It supports dark mode by default with light mode toggle, animated chat interactions, and personality-based AI responses.
-
----
-
-## 🚀 Features
-
-- **Landing Page** with engaging header and call-to-action  
-- **Responsive Sidebar** showing chat history and new chat option  
-- **Main Chat Interface** with animated chat bubbles and smooth transitions  
-- **User Profile Section** with account management  
-- **Dark Mode / Light Mode** toggle with smooth theme transitions (default: dark)  
-- **Customizable AI Personality** for varied chat experiences  
-- Clean, modern, and creative UI with accessibility in mind  
-- Fully responsive and mobile-friendly  
+**Zentra** is a modern, full-stack AI ChatBot application inspired by ChatGPT and DeepSeek, featuring sleek UI/UX, customizable AI personalities, and a fully responsive, dark-mode-first design. Built using the powerful Next.js App Router architecture, it integrates with OpenRouter for AI responses and MongoDB for chat history storage.
 
 ---
 
-## 🛠 Tech Stack
+## ✨ Features
 
-- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion  
-- **Backend:** Node.js, MongoDB  
-- **AI Integration:** OpenRouter API for AI chat capabilities  
-
----
-
-## 📂 Folder Structure
-
-The project follows a modular and scalable structure with separate directories for components, hooks, context, styles, and API routes, leveraging Next.js App Router features for routing and layouts.
-
----
-
-## 🎨 UI/UX Highlights
-
-- Dark mode enabled by default with smooth toggling to light mode  
-- Animated chat bubbles and transitions using Framer Motion  
-- Sidebar with chat history and responsive design  
-- Personality selection feature alters AI behaviour dynamically  
-- Clean and minimalist design focusing on user experience  
+- 🔥 **Beautiful Landing Page** with hero heading and CTA  
+- 💬 **Chat Interface** with animated message bubbles  
+- 🧠 **AI Personalities** — user can select different AI behavior presets  
+- 📁 **Responsive Sidebar** showing chat history and new chat option  
+- 👤 **User Authentication** (login/signup with session management)  
+- 🧾 **Chat Persistence** — stores chats using MongoDB  
+- 🎨 **Dark Mode by Default** with toggle to light mode  
+- ⚡ **Smooth Animations** using Framer Motion  
+- 📱 **Fully Responsive** for all devices  
 
 ---
 
-## 🤝 Contribution
+## 🧰 Tech Stack
 
-Feel free to open issues or submit pull requests to improve functionality, UI, or add new features.
+### Frontend
+- **Framework:** [Next.js (App Router)](https://nextjs.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Language:** TypeScript
+
+### Backend
+- **Server Runtime:** Node.js
+- **Database:** MongoDB
+- **AI API:** OpenRouter (ChatGPT-like responses)
+- **Authentication & API Routes:** Handled via Next.js App Router
 
 ---
+
+## 🤝 Contributing
+Got ideas or improvements? Feel free to open an issue or create a pull request.
 
 ## 📄 License
+Licensed under the MIT License.
 
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-Thank you for checking out Zentra! 🚀
+> ✨ Zentra – A new era of chatting with AI, beautifully reimagined.

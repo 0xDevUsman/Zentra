@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zentra – Full-Stack AI ChatBot with Stunning UI
 
-## Getting Started
+**Zentra** is a modern, full-stack AI ChatBot application inspired by ChatGPT and DeepSeek, featuring sleek UI/UX, customizable AI personalities, and a fully responsive, dark-mode-first design. Built using the powerful Next.js App Router architecture, it integrates with OpenRouter for AI responses and MongoDB for chat history storage.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔥 **Beautiful Landing Page** with hero heading and CTA
+- 💬 **Chat Interface** with animated message bubbles
+- 🧠 **AI Personalities** — user can select different AI behavior presets
+- 📁 **Responsive Sidebar** showing chat history and new chat option
+- 👤 **User Authentication** (login/signup with session management)
+- 🧾 **Chat Persistence** — stores chats using MongoDB
+- 🎨 **Dark Mode by Default** with toggle to light mode
+- ⚡ **Smooth Animations** using Framer Motion
+- 📱 **Fully Responsive** for all devices
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧰 Tech Stack
 
-## Learn More
+### Frontend
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** [Next.js (App Router)](https://nextjs.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Language:** TypeScript
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Server Runtime:** Node.js
+- **Database:** MongoDB
+- **AI API:** OpenRouter (ChatGPT-like responses)
+- **Authentication & API Routes:** Handled via Next.js App Router
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Got ideas or improvements? Feel free to open an issue or create a pull request.
+
+## 📄 License
+
+Licensed under the MIT License.
+
+> ✨ Zentra – A new era of chatting with AI, beautifully reimagined.

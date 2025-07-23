@@ -2,7 +2,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./Provider";
+import { ThemeProvider } from "@/context/ThemeContext";
+import ThemeToggle from "@/components/ThemeToogle";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,9 +22,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} scroll-smooth antialiased`}>
-        <Providers>{children}</Providers>
+    <html
+      className="dark transition-colors duration-300"
+      lang="en"
+      suppressHydrationWarning
+    >
+      <body
+        className={`${inter.className} scroll-smooth antialiased bg-white dark:bg-black text-black dark:text-white transition-colors duration-300`}
+      >
+        <ThemeProvider>
+          {children}
+
+          <div className="absolute right-10 bottom-10 cursor-pointer">
+            <ThemeToggle />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

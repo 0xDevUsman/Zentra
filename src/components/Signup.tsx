@@ -1,18 +1,21 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import logo from "@/assets/chat-gpt.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9] dark:bg-[#010101]">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9]">
       {/* Header with Logo */}
       <header className="absolute top-10 left-10">
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 items-center">
           <Image src={logo} alt="Zentra Logo" className="w-10" />
-          <h1 className="text-3xl font-bold text-black dark:text-white">
-            Zentra
-          </h1>
+          <h1 className="text-3xl font-bold text-black">Zentra</h1>
         </div>
       </header>
 
@@ -21,7 +24,7 @@ const Signup = () => {
         {/* Signup Form Container */}
         <div className="bg-transparent rounded-lg w-full">
           {/* Form Title */}
-          <h1 className="text-center font-bold text-3xl mb-6 text-black dark:text-white">
+          <h1 className="text-center font-bold text-3xl mb-6 text-black">
             Create an account
           </h1>
 
@@ -29,43 +32,61 @@ const Signup = () => {
           <form className="space-y-4">
             {/* Email Input */}
             <div className="space-y-2">
-              <label className="text-black dark:text-gray-50">
+              <label className="text-black">
                 Email address <span className="text-red-500">*</span>
               </label>
               <input
+                required
+                aria-required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 type="email"
-                className="w-full text-black dark:text-gray-50 dark:placeholder:text-gray-50 outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4"
+                className="w-full text-black placeholder:text-gray-500 outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4"
                 placeholder="Enter your email"
               />
             </div>
 
             {/* Password Input */}
             <div className="space-y-2">
-              <label className="text-black dark:text-gray-300">
+              <label className="text-black">
                 Password <span className="text-red-500">*</span>
               </label>
-              <input
-                type="password"
-                className="w-full text-black dark:text-gray-50 dark:placeholder:text-gray-50 outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4"
-                placeholder="Create a password"
-              />
+              <div className="relative">
+                <input
+                  required
+                  aria-required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  className="w-full text-black placeholder:text-gray-500 outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4 pr-12"
+                  placeholder="Create a password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash className="h-5 w-5" />
+                  ) : (
+                    <FaEye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-[#000000] dark:bg-white font-medium hover:opacity-85 text-white dark:text-black cursor-pointer px-2 py-3 rounded-full transition-colors duration-100"
+              className="w-full bg-[#000000] font-medium hover:opacity-85 text-white cursor-pointer px-2 py-3 rounded-full transition-colors duration-100"
             >
               Continue
             </button>
 
             {/* Login Link */}
-            <p className="text-center text-sm text-black dark:text-gray-50">
+            <p className="text-center text-sm text-black">
               Already have an account?{" "}
-              <a
-                href="/signin"
-                className="text-blue-500 dark:text-blue-400 hover:underline"
-              >
+              <a href="/signin" className="text-blue-500 hover:underline">
                 Log in
               </a>
             </p>
@@ -77,7 +98,7 @@ const Signup = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center">
-              <span className="px-2 bg-transparent text-sm font-bold text-black dark:text-white">
+              <span className="px-2 bg-transparent text-sm font-bold text-black">
                 OR
               </span>
             </div>
@@ -86,7 +107,7 @@ const Signup = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4">
             {/* Google Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] dark:outline-none transition-colors cursor-pointer duration-100">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -114,7 +135,7 @@ const Signup = () => {
             </button>
 
             {/* GitHub Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"

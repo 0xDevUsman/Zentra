@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import logo from "@/assets/chat-gpt.png";
 
-const Signup = () => {
+const Signin = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9] dark:bg-[#010101]">
       {/* Header with Logo */}
@@ -22,7 +22,7 @@ const Signup = () => {
         <div className="bg-transparent rounded-lg w-full">
           {/* Form Title */}
           <h1 className="text-center font-bold text-3xl mb-6 text-black dark:text-white">
-            Create an account
+            Welcome Back
           </h1>
 
           {/* Signup Form */}
@@ -62,12 +62,12 @@ const Signup = () => {
 
             {/* Login Link */}
             <p className="text-center text-sm text-black dark:text-gray-50">
-              Already have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a
-                href="/signin"
+                href="/signup"
                 className="text-blue-500 dark:text-blue-400 hover:underline"
               >
-                Log in
+                Sign up
               </a>
             </p>
           </form>
@@ -133,4 +133,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;

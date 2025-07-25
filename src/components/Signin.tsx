@@ -33,7 +33,6 @@ const Signin = () => {
                 Email address <span className="text-red-500">*</span>
               </label>
               <input
-                autoFocus
                 type="email"
                 className="w-full text-black dark:text-gray-50 dark:placeholder:text-gray-50 outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4"
                 placeholder="Enter your email"
@@ -55,7 +54,7 @@ const Signin = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-[#000000] dark:bg-white font-medium hover:opacity-85 text-white dark:text-black cursor-pointer px-2 py-3 rounded-full transition-colors duration-300"
+              className="w-full bg-[#000000] dark:bg-white font-medium hover:opacity-85 text-white dark:text-black cursor-pointer px-2 py-3 rounded-full transition-colors duration-100"
             >
               Continue
             </button>
@@ -87,7 +86,7 @@ const Signin = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4">
             {/* Google Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] dark:outline-none transition-colors cursor-pointer duration-300">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] dark:outline-none transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -115,7 +114,7 @@ const Signin = () => {
             </button>
 
             {/* GitHub Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] transition-colors cursor-pointer duration-300">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black dark:text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] dark:bg-white dark:hover:opacity-85 outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"

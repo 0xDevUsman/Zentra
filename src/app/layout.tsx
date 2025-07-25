@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientWrapper from "@/components/ClientWrapper";
-import { ThemeProvider } from "@/context/ThemeContext";
+// import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider } from "next-themes";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -22,16 +23,20 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className="dark transition-colors duration-300"
+      className="dark transition-colors duration-100"
       lang="en"
       suppressHydrationWarning
       suppressContentEditableWarning
     >
       <body
         suppressHydrationWarning
-        className={`${inter.className} scroll-smooth antialiased bg-white dark:bg-black text-black dark:text-white transition-colors duration-300`}
+        className={`${inter.className} scroll-smooth antialiased bg-white dark:bg-black text-black dark:text-white transition-colors duration-100`}
       >
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
           <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>
       </body>

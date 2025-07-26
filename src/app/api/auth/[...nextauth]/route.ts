@@ -6,7 +6,6 @@ import { connectDB } from "@/lib/db";
 import { User } from "@/models/user";
 import bcrypt from "bcrypt";
 
-// Extend the Session type to include id on user
 declare module "next-auth" {
   interface Session {
     user: {
@@ -17,12 +16,8 @@ declare module "next-auth" {
   }
 }
 
-// -------------------
-// Fully Typed Options
-// -------------------
 export const authOptions: NextAuthOptions = {
   providers: [
-    // ✅ Credentials Provider
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -47,13 +42,11 @@ export const authOptions: NextAuthOptions = {
       },
     }),
 
-    // ✅ GitHub Provider
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID ?? "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
     }),
 
-    // ✅ Google Provider
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
@@ -69,7 +62,39 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
+    async signIn({ user, account }) {
+      console.log("signIn callback", { user, account });
+
+      if (!user?.email) {
+        console.log("No email found on user");
+        return false;
+      }
+
+      await connectDB();
+
+      if (account?.provider !== "credentials") {
+        const existingUser = await User.findOne({ email: user.email });
+        console.log("existingUser:", existingUser);
+
+        if (!existingUser) {
+          const newUser = new User({
+            email: user.email,
+            provider: account?.provider,
+          });
+          try {
+            await newUser.save();
+            console.log("New OAuth user saved:", newUser);
+          } catch (error) {
+            console.error("Error saving new OAuth user:", error);
+            return false;
+          }
+        }
+      }
+
+      return true;
+    },
+
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -88,8 +113,5 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// ---------------------------
-// Required for App Router API
-// ---------------------------
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

@@ -31,6 +31,63 @@ const Signin = () => {
     }
   };
 
+  const googleSignIn = async () => {
+    const toastId = toast.loading("Signing in with Google...");
+
+    try {
+      const res = await signIn("google", {
+        redirect: false,
+        callbackUrl: "/", // or use dynamic based on state
+      });
+
+      if (res?.error) {
+        toast.error(res.error || "Google sign-in failed");
+      } else if (res?.ok && res.url) {
+        toast.dismiss(toastId);
+        setTimeout(() => {
+          if (res.url) {
+            if (res.url) {
+              window.location.href = res.url;
+            }
+          }
+        }, 2000);
+      }
+    } catch (error) {
+      toast.dismiss(toastId);
+      console.error("Google sign-in error:", error);
+      toast.error("Google sign-in failed. Please try again.");
+    }
+  };
+
+  const githubSignIn = async () => {
+    const toastId = toast.loading("Signing in with GitHub...");
+
+    try {
+      const callbackUrl =
+        new URLSearchParams(window.location.search).get("callbackUrl") || "/";
+
+      const res = await signIn("github", {
+        redirect: false,
+        callbackUrl,
+      });
+
+      if (res?.error) {
+        toast.error(res.error || "GitHub sign-in failed");
+      } else if (res?.ok && res.url) {
+        toast.dismiss(toastId);
+        setTimeout(() => {
+          if (res.url) {
+            window.location.href = res.url;
+          }
+        }, 2000);
+      }
+    } catch (error) {
+      toast.dismiss(toastId);
+      console.error("GitHub sign-in error:", error);
+      toast.error("GitHub sign-in failed. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9]">
       {/* Header with Logo */}
@@ -127,7 +184,10 @@ const Signin = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4">
             {/* Google Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black  outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]   outline-[#b9b9b9]  transition-colors cursor-pointer duration-100">
+            <button
+              onClick={() => googleSignIn()}
+              className="flex items-center justify-center w-full gap-2 font-medium text-black  outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]   outline-[#b9b9b9]  transition-colors cursor-pointer duration-100"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -155,7 +215,10 @@ const Signin = () => {
             </button>
 
             {/* GitHub Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]  outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
+            <button
+              onClick={() => githubSignIn()}
+              className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]  outline-[#b9b9b9] transition-colors cursor-pointer duration-100"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"

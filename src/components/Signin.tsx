@@ -3,11 +3,34 @@ import Image from "next/image";
 import React, { useState } from "react";
 import logo from "@/assets/chat-gpt.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const toastId = toast.loading("Signing in...");
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    toast.dismiss(toastId);
+
+    if (res?.ok) {
+      toast.success("Signed in successfully!");
+      window.location.href = "/";
+    } else {
+      toast.error(res?.error || "Invalid credentials");
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9]">
       {/* Header with Logo */}
@@ -28,7 +51,7 @@ const Signin = () => {
           </h1>
 
           {/* Signup Form */}
-          <form className="space-y-4">
+          <form onSubmit={handleSignIn} className="space-y-4">
             {/* Email Input */}
             <div className="space-y-2">
               <label className="text-black">

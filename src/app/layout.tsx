@@ -1,6 +1,7 @@
 // layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import ClientWrapper from "@/components/ClientWrapper";
 import { ThemeProvider } from "next-themes";
@@ -38,6 +39,8 @@ export default function RootLayout({
         >
           <ClientWrapper>
             {children}
+
+            <Toaster />
           </ClientWrapper>
         </ThemeProvider>
       </body>

@@ -3,15 +3,48 @@ import Image from "next/image";
 import React, { useState } from "react";
 import logo from "@/assets/chat-gpt.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = {
+      email: email.trim().toLowerCase(),
+      password: password.trim(),
+    };
+    if (!formData.email || !formData.password) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+    try {
+      const response = await axios.post("/api/auth/register", formData);
+      if (response.status === 201) {
+        toast.success("Registration successful! You can now log in.");
+        setEmail("");
+        setPassword("");
+        window.location.href = "/signin";
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F9F9F9]">
       {/* Header with Logo */}
+
       <header className="absolute top-10 left-10">
         <div className="flex gap-2 items-center">
           <Image src={logo} alt="Zentra Logo" className="w-10" />
@@ -29,7 +62,7 @@ const Signup = () => {
           </h1>
 
           {/* Signup Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Email Input */}
             <div className="space-y-2">
               <label className="text-black">
@@ -107,7 +140,7 @@ const Signup = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4">
             {/* Google Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black  outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]   outline-[#b9b9b9]  transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -135,7 +168,7 @@ const Signup = () => {
             </button>
 
             {/* GitHub Button */}
-            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC] outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
+            <button className="flex items-center justify-center w-full gap-2 font-medium text-black outline-1 px-2 py-3 rounded-full hover:bg-[#ECECEC]  outline-[#b9b9b9] transition-colors cursor-pointer duration-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"

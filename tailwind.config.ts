@@ -1,12 +1,15 @@
 // tailwind.config.ts or .js
-export default {
-  darkMode: 'class', // <-- required for next-themes
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+import tailwindScrollbarHide from "tailwind-scrollbar-hide";
+
+const config = {
+  darkMode: "class", // <-- required for next-themes
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      // Add custom theme extensions here if needed
+    },
   },
-  plugins: [],
+  plugins: [tailwindScrollbarHide],
 };
+
+export default config;

@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import ClientWrapper from "@/components/ClientWrapper";
 import { ThemeProvider } from "next-themes";
 const inter = Inter({
   variable: "--font-inter",
@@ -37,11 +36,9 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem={false}
         >
-          <ClientWrapper>
-            {children}
+          {children}
 
-            <Toaster />
-          </ClientWrapper>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

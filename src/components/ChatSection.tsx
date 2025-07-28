@@ -14,8 +14,8 @@ const ChatSection = () => {
 
   return (
     <>
-      <div className="flex h-screen w-4/5 dark:bg-[#282a2e] bg-white p-10">
-        <div className="w-full dark:bg-[#202125] bg-white rounded-md  flex flex-col justify-between ">
+      <div className="flex h-screen w-4/5 dark:bg-[#282a2e] bg-white p-10 pb-4 px-1">
+        <div className="w-full dark:bg-[#202125] bg-[#f5f5f5] rounded-md  flex flex-col justify-between ">
           <div className="flex flex-col gap-4 px-10 py-6 overflow-y-auto custom-scrollbar transition-all duration-300">
             <ChatMessage message="Hello, how are you?" isSender={true} />
             <ChatMessage
@@ -73,6 +73,7 @@ const ChatSection = () => {
             <ChatInput onSend={(msg) => console.log("Sent:", msg)} />
           </div>
         </div>
+
       </div>
     </>
   );

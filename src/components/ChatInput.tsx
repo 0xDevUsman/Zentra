@@ -33,7 +33,7 @@ export default function ChatInput({
   }, [message]);
 
   return (
-    <div className="flex items-end w-full px-4 py-2 bg-[#363942] rounded-md">
+    <div className="flex items-end w-full px-6 py-2 dark:bg-[#363942] bg-[#e9e5e5] border border-gray-300 dark:border-gray-800 rounded-md">
       <textarea
         ref={textareaRef}
         value={message}
@@ -41,11 +41,11 @@ export default function ChatInput({
         onKeyDown={handleKeyDown}
         placeholder="Ask any question..."
         rows={1}
-        className="flex-1 resize-none overflow-hidden bg-transparent text-white placeholder-gray-300 focus:outline-none"
+        className="flex-1 resize-none overflow-hidden bg-transparent dark:text-white text-black dark:placeholder-gray-300 placeholder-gray-800 focus:outline-none"
       />
       <button
         onClick={handleSend}
-        className="ml-2 text-white transition-all duration-200"
+        className="ml-2 dark:text-white text-black transition-all duration-200"
       >
         <IoSend size={22} />
       </button>

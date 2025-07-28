@@ -3,43 +3,51 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
-  /* Hide scrollbar */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  /* Custom scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent; /* clean, no track */
+    background: transparent;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #4b4f5b; /* your dark gray-blue */
+    background-color: #cbd5e1; /* Light mode: Tailwind gray-300 */
     border-radius: 9999px;
     border: 2px solid transparent;
     background-clip: content-box;
     transition: background-color 0.3s ease;
   }
-  /* On hover, slightly lighter */
+
   .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-    background-color: #6b7280; /* Tailwind gray-500 */
+    background-color: #94a3b8; /* Light mode hover: Tailwind gray-400 */
   }
 
-  /* Firefox scrollbar */
+  /* Dark mode scrollbar styles */
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b4f5b;
+  }
+
+  .dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #6b7280;
+  }
+
+  /* Firefox scrollbar styles */
   .custom-scrollbar {
     scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent; /* Light mode */
+  }
+
+  .custom-scrollbar:hover {
+    scrollbar-color: #94a3b8 transparent; /* Light mode hover */
+  }
+
+  .dark .custom-scrollbar {
     scrollbar-color: #4b4f5b transparent;
   }
-  .custom-scrollbar:hover {
+
+  .dark .custom-scrollbar:hover {
     scrollbar-color: #6b7280 transparent;
   }
 }

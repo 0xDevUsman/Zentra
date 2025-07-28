@@ -3,11 +3,43 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
+  /* Hide scrollbar */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
   .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* clean, no track */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b4f5b; /* your dark gray-blue */
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.3s ease;
+  }
+  /* On hover, slightly lighter */
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #6b7280; /* Tailwind gray-500 */
+  }
+
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #4b4f5b transparent;
+  }
+  .custom-scrollbar:hover {
+    scrollbar-color: #6b7280 transparent;
   }
 }

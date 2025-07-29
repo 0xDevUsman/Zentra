@@ -16,7 +16,7 @@ const ChatSection = () => {
     <>
       <div className="flex h-screen w-4/5 dark:bg-[#282a2e] bg-white p-10 pb-4 px-1">
         <div className="w-full dark:bg-[#202125] bg-[#f5f5f5] rounded-md  flex flex-col justify-between ">
-          <div className="flex flex-col gap-4 px-10 py-6 overflow-y-auto custom-scrollbar transition-all duration-300">
+          <div className="flex flex-col gap-4 px-24 py-6 overflow-y-auto custom-scrollbar transition-all duration-300">
             <ChatMessage message="Hello, how are you?" isSender={true} />
             <ChatMessage
               message="I'm good, thanks for asking!"
@@ -26,7 +26,7 @@ const ChatSection = () => {
             <ChatMessage message="blue! bluh! bluh! " isSender={false} />
             <ChatMessage message="Hello, how are you?" isSender={true} />
             <ChatMessage
-              message="I'm good, thanks for asking!"
+              message="I'm good, thanks for lorem23a dsjd aidjasoidjaso jdijdoijaso djasoidj oasjdosoijd oaij doiajfijoijoi oijfoiadjfo jfojdsofjo odfjodsfj j ojfo isdjfjsdofjosdj fodjfo jo jdfjosdfojdsoj sdoj soj osdoj sdofjsdofjsdjosdjf0 dfsd fjnsdusk asjd najnkjkj uasasdf jfdudshfudi uisdfh sdhfkjsdkh asking!"
               isSender={false}
             />
             <ChatMessage message="Hello, how are you?" isSender={true} />

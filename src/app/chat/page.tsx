@@ -1,12 +1,10 @@
-import Chat from "@/components/Chat";
-import React from "react";
+import Chat from '@/components/Chat'
+import React from 'react'
 
 const page = () => {
-  return (
-    <>
-      <Chat />
-    </>
-  );
-};
+    return (
+        <Chat />
+    )
+}
 
 export default page;

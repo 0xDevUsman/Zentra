@@ -25,7 +25,7 @@ const Signin = () => {
 
     if (res?.ok) {
       toast.success("Signed in successfully!");
-      window.location.href = "/";
+      window.location.href = "/chat";
     } else {
       toast.error(res?.error || "Invalid credentials");
     }
@@ -37,7 +37,7 @@ const Signin = () => {
     try {
       const res = await signIn("google", {
         redirect: false,
-        callbackUrl: "/", // or use dynamic based on state
+        callbackUrl: "/chat", // or use dynamic based on state
       });
 
       if (res?.error) {

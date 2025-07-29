@@ -69,7 +69,7 @@ export default function ChatInput({
           onClick={() => setShowDropdown((prev) => !prev)}
           aria-haspopup="true"
           aria-expanded={showDropdown}
-          className="dark:text-white text-black transition-all duration-200 cursor-pointer hover:bg-gray-300 text-sm rounded-md p-2 flex items-center justify-center gap-x-2"
+          className="dark:text-white text-black transition-all duration-200 cursor-pointer dark:hover:bg-[#4B4F5B] hover:bg-gray-300 text-sm rounded-md p-2 flex items-center justify-center gap-x-2"
           type="button"
         >
           Personality
@@ -81,14 +81,14 @@ export default function ChatInput({
         </button>
 
         {showDropdown && (
-          <div className="absolute bottom-full right-0 mb-2 w-44 bg-white dark:bg-[#1f1f1f] shadow-lg rounded-md p-2 text-sm z-50">
-            <div className="hover:bg-gray-100 dark:hover:bg-[#2a2a2a] p-2 rounded cursor-pointer">
+          <div className="absolute bottom-full right-0 mb-2 w-44 bg-white dark:bg-[#4B4F5B] shadow-lg rounded-md p-2 text-sm z-50">
+            <div className="hover:bg-gray-100 dark:hover:bg-[#363942] p-2 rounded cursor-pointer">
               Personality 1
             </div>
-            <div className="hover:bg-gray-100 dark:hover:bg-[#2a2a2a] p-2 rounded cursor-pointer">
+            <div className="hover:bg-gray-100 dark:hover:bg-[#363942] p-2 rounded cursor-pointer">
               Personality 2
             </div>
-            <div className="hover:bg-gray-100 dark:hover:bg-[#2a2a2a] p-2 rounded cursor-pointer">
+            <div className="hover:bg-gray-100 dark:hover:bg-[#363942] p-2 rounded cursor-pointer">
               Personality 3
             </div>
           </div>

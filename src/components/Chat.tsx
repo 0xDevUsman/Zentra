@@ -1,16 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import ChatHistory from "./ChatHistory";
 import ChatSection from "./ChatSection";
 import { usePathname } from "next/navigation";
 import NewChat from "./NewChat";
+import axios from "axios";
 
 export default function Chat() {
   const pathname = usePathname();
 
-  // Example: only show ChatSection if path matches /chat/something
+  useEffect(() => {
+    async function createChat() {
+      const response = await axios.post("/api/chat/create");
+      if (!response) {
+        console.log("not able to reach")
+      }
+      else {
+        // console.log(response);
+      }
+    }
+    createChat();
+  }, [])
+
   const showChatSection = /^\/chat\/[^/]+$/.test(pathname);
 
   return (

@@ -77,7 +77,6 @@ export default function ProfilePage() {
                             </div>
                         )}
                     </div>
-
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Left Column - Avatar & Social */}
                         <div className="space-y-6">

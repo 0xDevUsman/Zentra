@@ -36,13 +36,13 @@ const Sidebar = () => {
           <Image src={icon} alt="Chat GPT" className="mt-2 mb-8 w-12" />
           <Link href={"/chat"} className="relative group flex items-center justify-center mt-4">
             <RiChatNewLine className="text-white text-4xl px-2 py-2 cursor-pointer hover:bg-[#23c69e] bg-[#10a37f] rounded-md mb-2" />
-            <span className="absolute left-full mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span className="absolute left-full z-10 mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               New Chat
             </span>
           </Link>
           <Link href={"/chat/jhdbsajb"} className="relative group flex items-center justify-center mt-4">
             <IoChatbubbleOutline className="text-white text-4xl px-2 py-2 cursor-pointer hover:bg-[#23c69e] bg-[#10a37f] rounded-md mb-2" />
-            <span className="absolute left-full mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span className="absolute left-full z-10 mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Chat
             </span>
           </Link>
@@ -52,14 +52,14 @@ const Sidebar = () => {
             href={"/profile"}
             className="relative group flex items-center justify-center mt-4">
             <FaRegUser className="text-white text-4xl px-2 py-2 cursor-pointer hover:bg-[#23c69e] bg-[#10a37f] rounded-md mb-2" />
-            <span className="absolute left-full mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span className="absolute left-full z-10 mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Profile
             </span>
           </Link>
           <div
             onClick={() => Logout()} className="relative group flex items-center justify-center mt-4">
             <RiLogoutCircleRLine className="text-white text-4xl px-2 py-2 cursor-pointer hover:bg-[#23c69e] bg-[#10a37f] rounded-md mb-2" />
-            <span className="absolute left-full mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span className="absolute left-full z-10 mb-2 px-2 py-1 whitespace-nowrap text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Logout
             </span>
           </div >

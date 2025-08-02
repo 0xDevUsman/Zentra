@@ -19,7 +19,6 @@ export default function Chat() {
         console.log("not able to reach")
       }
       else {
-        // console.log(response);
       }
     }
     createChat();

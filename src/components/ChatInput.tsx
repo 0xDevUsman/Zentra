@@ -12,17 +12,15 @@ export default function ChatInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Send message handler
   const handleSend = () => {
     const trimmed = message.trim();
     if (trimmed) {
       onSend(trimmed);
       setMessage("");
-      setShowDropdown(false); // Close dropdown on send (optional)
+      setShowDropdown(false);
     }
   };
 
-  // Send message on Enter (without Shift)
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -30,7 +28,6 @@ export default function ChatInput({
     }
   };
 
-  // Auto resize textarea height on message change
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -39,7 +36,6 @@ export default function ChatInput({
     }
   }, [message]);
 
-  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (

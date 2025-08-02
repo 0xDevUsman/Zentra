@@ -37,7 +37,7 @@ const Signin = () => {
     try {
       const res = await signIn("google", {
         redirect: false,
-        callbackUrl: "/chat", // or use dynamic based on state
+        callbackUrl: "/chat",
       });
 
       if (res?.error) {
@@ -135,7 +135,7 @@ const Signin = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPassword ? "text" : "password"}
-                  className="w-full text-black outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4 pr-12" // note pr-12 for eye icon space
+                  className="w-full text-black outline-1 text-sm outline-[#b9b9b9] py-3 rounded-full mt-1 px-4 pr-12"
                   placeholder="Create a password"
                 />
                 <button

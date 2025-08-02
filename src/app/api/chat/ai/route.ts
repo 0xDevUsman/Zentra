@@ -1,5 +1,3 @@
-// /app/api/ask-ai/route.ts
-
 export const maxDuration = 120;
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
@@ -10,7 +8,7 @@ import { connectDB } from "@/lib/db";
 
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!, // Use env variable
+  apiKey: process.env.OPENROUTER_API_KEY!,
   defaultHeaders: {
     "HTTP-Referer": "http://localhost:3000/",
     "X-Title": "Zentra",

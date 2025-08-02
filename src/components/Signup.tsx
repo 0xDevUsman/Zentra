@@ -48,7 +48,7 @@ const Signup = () => {
     try {
       const res = await signIn("google", {
         redirect: false,
-        callbackUrl: "/chat", // or use dynamic based on state
+        callbackUrl: "/chat",
       });
 
       if (res?.error) {

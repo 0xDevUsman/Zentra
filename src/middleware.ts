@@ -29,4 +29,3 @@ export const config = {
 };
 
 
-// check authentication for all api/.. routes

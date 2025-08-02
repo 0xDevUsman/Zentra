@@ -1,4 +1,3 @@
-// app/profile/page.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -29,7 +28,6 @@ export default function ProfilePage() {
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Set initial data from session
     useEffect(() => {
         if (status === "authenticated" && user) {
             setName(user.name ?? "");
@@ -53,7 +51,6 @@ export default function ProfilePage() {
         setEmail(tempData.email);
         setBio(tempData.bio);
         setIsEditing(false);
-        // Optionally: send updated data to API here
     };
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {

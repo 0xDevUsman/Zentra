@@ -1,4 +1,3 @@
-// ChatMessage.tsx
 export default function ChatMessage({
   message,
   isSender,

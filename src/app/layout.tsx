@@ -1,9 +1,8 @@
-// layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import { Providers } from "@/components/Provider";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -17,29 +16,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  session,
+}: {
   children: React.ReactNode;
-}>) {
+  session?: import("next-auth").Session;
+}) {
   return (
-    <html
-      className="dark transition-colors duration-100"
-      lang="en"
-      suppressHydrationWarning
-      suppressContentEditableWarning
-    >
-      <body
-        suppressHydrationWarning
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning
         className={`${inter.className} scroll-smooth antialiased bg-white dark:bg-black text-black dark:text-white transition-colors duration-100`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          {children}
-
-          <Toaster />
-        </ThemeProvider>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );

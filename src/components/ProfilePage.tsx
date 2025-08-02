@@ -1,20 +1,47 @@
 // app/profile/page.tsx
 "use client";
 
-import { useState, useRef } from 'react';
-import { FiEdit2, FiSave, FiUser, FiCamera, FiX, } from 'react-icons/fi';
-import { MdEmail, MdPerson } from 'react-icons/md';
-import Sidebar from './Sidebar';
-import Image from 'next/image';
+import { useState, useRef, useEffect } from "react";
+import { FiEdit2, FiSave, FiUser, FiCamera, FiX } from "react-icons/fi";
+import { MdEmail, MdPerson } from "react-icons/md";
+import Sidebar from "./Sidebar";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+
+interface User {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    id?: string;
+}
 
 export default function ProfilePage() {
+    const { data: session, status } = useSession();
+    const user = session?.user as User | undefined;
+
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState('Alex Johnson');
-    const [email, setEmail] = useState('alex.johnson@example.com');
-    const [bio, setBio] = useState('A dedicated individual striving to make a positive impact.');
-    const [tempData, setTempData] = useState({ name, email, bio });
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [bio, setBio] = useState<string>(
+        "A dedicated individual striving to make a positive impact."
+    );
+    const [tempData, setTempData] = useState({ name: "", email: "", bio });
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Set initial data from session
+    useEffect(() => {
+        if (status === "authenticated" && user) {
+            setName(user.name ?? "");
+            setEmail(user.email ?? "");
+            setAvatarPreview(user.image ?? null);
+            setTempData({
+                name: user.name ?? "",
+                email: user.email ?? "",
+                bio,
+            });
+        }
+    }, [user, bio, status]);
 
     const handleEdit = () => {
         setTempData({ name, email, bio });
@@ -26,11 +53,12 @@ export default function ProfilePage() {
         setEmail(tempData.email);
         setBio(tempData.bio);
         setIsEditing(false);
+        // Optionally: send updated data to API here
     };
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
+        if (file && file.type.startsWith("image/")) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setAvatarPreview(reader.result as string);
@@ -43,17 +71,27 @@ export default function ProfilePage() {
         fileInputRef.current?.click();
     };
 
+    if (status === "loading") {
+        return <div className="flex items-center justify-center min-h-screen text-3xl gap-4">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <h1>Loading...</h1>
+        </div>
+
+    }
+
     return (
         <div className="flex h-screen w-full dark:bg-[#1D1D20] bg-white transition-colors duration-300">
             <Sidebar />
             <div className="w-4/5 mx-auto px-6 md:px-24 py-12">
                 <div className="max-w-4xl mx-auto">
                     <div className="flex justify-between items-center mb-8">
-                        <h1 className="text-3xl font-bold text-gray-800 dark:text-[#ced0d6]">Profile Settings</h1>
+                        <h1 className="text-3xl font-bold text-gray-800 dark:text-[#ced0d6]">
+                            Profile Settings
+                        </h1>
                         {!isEditing ? (
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                                className="flex cursor-pointer items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                             >
                                 <FiEdit2 className="w-4 h-4" />
                                 <span>Edit Profile</span>
@@ -62,14 +100,14 @@ export default function ProfilePage() {
                             <div className="flex space-x-3">
                                 <button
                                     onClick={() => setIsEditing(false)}
-                                    className="flex items-center space-x-2 px-4 py-2 bg-gray-200 dark:bg-[#343541] hover:bg-gray-300 dark:hover:bg-[#3e404a] text-gray-800 dark:text-[#ced0d6] rounded-lg transition-all duration-200"
+                                    className="flex cursor-pointer items-center space-x-2 px-4 py-2 bg-gray-200 dark:bg-[#343541] hover:bg-gray-300 dark:hover:bg-[#3e404a] text-gray-800 dark:text-[#ced0d6] rounded-lg transition-all duration-200"
                                 >
                                     <FiX className="w-4 h-4" />
                                     <span>Cancel</span>
                                 </button>
                                 <button
                                     onClick={handleSave}
-                                    className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                                    className="flex cursor-pointer items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                                 >
                                     <FiSave className="w-4 h-4" />
                                     <span>Save Changes</span>
@@ -77,14 +115,22 @@ export default function ProfilePage() {
                             </div>
                         )}
                     </div>
+
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Left Column - Avatar & Social */}
+                        {/* Left Column - Avatar & Info */}
                         <div className="space-y-6">
                             <div className="bg-white dark:bg-[#282a2e] rounded-xl shadow-md p-6 transition-all duration-300">
                                 <div className="relative group">
-                                    <div className="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white dark:border-[#343541] shadow-lg">
-                                        {avatarPreview ? (
-                                            <Image src={avatarPreview} alt="Profile" className="w-full h-full object-cover" />
+                                    <div className="w-40 h-40 mx-auto relative rounded-full overflow-hidden border-4 border-white dark:border-[#343541] shadow-lg">
+                                        {avatarPreview || user?.image ? (
+                                            <Image
+                                                src={avatarPreview || user?.image || ""}
+                                                alt="Profile"
+                                                width={160}
+                                                height={160}
+                                                className="object-cover w-full h-full"
+                                                priority
+                                            />
                                         ) : (
                                             <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                                                 <FiUser className="w-20 h-20 text-white opacity-80" />
@@ -112,14 +158,15 @@ export default function ProfilePage() {
                                             <input
                                                 type="text"
                                                 value={tempData.name}
-                                                onChange={(e) => setTempData({ ...tempData, name: e.target.value })}
-                                                className="text-center bg-transparent border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500"
+                                                onChange={(e) =>
+                                                    setTempData({ ...tempData, name: e.target.value })
+                                                }
+                                                className="text-center w-48 bg-transparent border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500"
                                             />
                                         ) : (
                                             name
                                         )}
                                     </h2>
-                                    <p className="text-gray-500 dark:text-gray-400 mt-1">@alexjohnson</p>
                                 </div>
                             </div>
 
@@ -134,22 +181,21 @@ export default function ProfilePage() {
                                             <input
                                                 type="email"
                                                 value={tempData.email}
-                                                onChange={(e) => setTempData({ ...tempData, email: e.target.value })}
+                                                onChange={(e) =>
+                                                    setTempData({ ...tempData, email: e.target.value })
+                                                }
                                                 className="w-full px-3 py-2 bg-gray-100 dark:bg-[#343541] rounded-md text-gray-800 dark:text-[#ced0d6] focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             />
                                         ) : (
                                             <p className="text-gray-800 dark:text-[#ced0d6]">{email}</p>
                                         )}
                                     </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone</p>
-                                        <p className="text-gray-800 dark:text-[#ced0d6]">+1 (555) 123-4567</p>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right Column - Profile Details */}
+                        {/* Right Column - Bio */}
                         <div className="lg:col-span-2 space-y-6">
                             <div className="bg-white dark:bg-[#282a2e] rounded-xl shadow-md p-6 transition-all duration-300">
                                 <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-4 flex items-center">
@@ -158,7 +204,9 @@ export default function ProfilePage() {
                                 {isEditing ? (
                                     <textarea
                                         value={tempData.bio}
-                                        onChange={(e) => setTempData({ ...tempData, bio: e.target.value })}
+                                        onChange={(e) =>
+                                            setTempData({ ...tempData, bio: e.target.value })
+                                        }
                                         rows={4}
                                         className="w-full px-3 py-2 bg-gray-100 dark:bg-[#343541] rounded-md text-gray-800 dark:text-[#ced0d6] focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
@@ -166,7 +214,6 @@ export default function ProfilePage() {
                                     <p className="text-gray-800 dark:text-[#ced0d6]">{bio}</p>
                                 )}
                             </div>
-
                         </div>
                     </div>
                 </div>

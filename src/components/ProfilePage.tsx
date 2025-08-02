@@ -74,7 +74,7 @@ export default function ProfilePage() {
     if (status === "loading") {
         return <div className="flex items-center justify-center min-h-screen text-3xl gap-4">
             <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <h1>Loading...</h1>
+            <h1>Loading... </h1>
         </div>
 
     }

@@ -6,7 +6,6 @@ import { connectDB } from "@/lib/db";
 
 interface Input {
   chatId: string;
-  name: string;
 }
 
 export const DELETE = async (req: Request) => {
@@ -14,6 +13,7 @@ export const DELETE = async (req: Request) => {
     await connectDB();
     const session = await getServerSession(authOptions);
     const userId = session?.user.id;
+    console.log("Session:", session);
 
     if (!userId) {
       return NextResponse.json(

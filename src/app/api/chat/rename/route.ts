@@ -13,6 +13,8 @@ export const PATCH = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
     const userId = session?.user.id;
+    console.log(userId);
+
     await connectDB();
     if (!userId) {
       return NextResponse.json(
@@ -47,4 +49,10 @@ export const PATCH = async (req: Request) => {
       { status: 500 }
     );
   }
+};
+
+export const GET = async () => {
+  return NextResponse.json({
+    message: "workingt his mf",
+  });
 };

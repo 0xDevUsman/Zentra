@@ -2,9 +2,10 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 
 type ChatHistory = {
-  _id : string,
+  _id: string,
   name: string,
   message: [
     role: string,
@@ -17,9 +18,13 @@ type AppContextType = {
   loading: boolean;
   setLoading: (val: boolean) => void;
   fetchChats: () => void;
+  deleteChat: (data: chatDelete) => void;
   chatHistory: ChatHistory[]
 };
 
+type chatDelete = {
+  chatId: string
+}
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
@@ -33,14 +38,31 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await axios.get("/api/chat/get");
     if (response.data.success) {
       setChatHistory(response.data?.data)
+      console.log(response.data?.data)
     }
   }, [])
 
-  const deletChat = async ()=>{
+  const deleteChat = async ({ chatId }: chatDelete) => {
+    try {
+      const response = await axios.delete("/api/chat/delete", {
+        data: { chatId },
+      });
 
-  }
+
+      console.log(response.data)
+      if (response.data.success) {
+        toast.success("Chat Deleted");
+        fetchChats();
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
+      console.error(error);
+    }
+  };
+
+
   return (
-    <AppContext.Provider value={{ user, setUser, loading, setLoading, fetchChats, chatHistory }}>
+    <AppContext.Provider value={{ user, setUser, loading, setLoading, fetchChats, chatHistory, deleteChat }}>
       {children}
     </AppContext.Provider>
   );

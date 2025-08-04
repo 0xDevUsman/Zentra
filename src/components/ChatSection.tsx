@@ -40,9 +40,9 @@ const ChatSection = ({ chatHistory }: Props) => {
           style={{ height: '100%' }}
         >
           <div className="flex flex-col gap-4 px-4 sm:px-6 md:px-12 lg:px-24 py-6 overflow-y-auto custom-scrollbar transition-all duration-300 flex-grow">
-            {chat.message.map((message) => (
+            {chat.message.map((message, idx) => (
               <ChatMessage
-                key={message.content._id}
+                key={idx}
                 message={message.content.content}
                 isSender={message.content.role === "user" ? true : false}
               />

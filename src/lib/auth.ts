@@ -25,7 +25,10 @@ export const authOptions: NextAuthOptions = {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) throw new Error("Invalid email or password.");
 
-        return { id: user.id.toString(), email: user.email };
+        return {
+          id: user._id.toString(),
+          email: user.email,
+        };
       },
     }),
     GitHubProvider({
@@ -71,15 +74,23 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        // Find user by email to get MongoDB _id regardless of provider
+        const dbUser = await User.findOne({ email: user.email }).lean();
+        if (dbUser && dbUser._id) {
+          token.id = dbUser._id.toString(); // MongoDB ObjectId as string
+          token.email = dbUser.email;
+        } else {
+          // fallback: for safety if user not found in DB (rare)
+          token.id = user.id; // provider id
+          token.email = user.email;
+        }
       }
       return token;
     },
 
     async session({ session, token }) {
       if (token?.id && session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as string; // MongoDB ObjectId string here
         session.user.email = token.email as string;
       }
       return session;

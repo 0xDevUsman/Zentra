@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 
 export interface IChat extends Document {
   name: string;
@@ -13,16 +13,14 @@ export interface IChat extends Document {
   timestamp?: Date;
 }
 
-const chatSchema: Schema<IChat> = new Schema({
+const chatSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  message: [
-    {
-      role: { type: String, required: true },
-      content: { type: String, required: true },
-      timeStamp: { type: Number, required: true },
-    },
-  ],
-  userId: { type: String, required: true },
+  message: { type: Array, required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   timestamp: { type: Date, default: Date.now },
 });
 

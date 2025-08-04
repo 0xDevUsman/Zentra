@@ -1,8 +1,24 @@
 "use client";
+
 import React, { useState, useRef, useEffect } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
-const ChatElement = () => {
+type ChatMessage = {
+  role: string;
+  content: string;
+  timestamp?: number;
+};
+
+type ChatProps = {
+  name: string;
+  message: ChatMessage[];
+};
+
+type Props = {
+  chat: ChatProps;
+};
+
+const ChatElement = ({ chat }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -12,25 +28,25 @@ const ChatElement = () => {
         setMenuOpen(false);
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleEdit = () => {
-    alert("Edit clicked");
+    alert("Edit clicked for " + chat.name);
     setMenuOpen(false);
   };
 
   const handleDelete = () => {
-    alert("Delete clicked");
+    alert("Delete clicked for " + chat.name);
     setMenuOpen(false);
   };
 
   return (
-    <div className="relative flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-[#1d1d20] cursor-pointer rounded-lg shadow-sm w-full mt-2">
+    <div className="relative flex items-center justify-between px-4 py-4 bg-gray-50 dark:bg-[#1d1d20] cursor-pointer rounded-lg shadow-sm w-full mt-2">
       <div>
-        <h1 className="font-bold text-base">Heading</h1>
-        <p className="text-sm">This is a chat element.</p>
+        <h1 className="font-bold text-base">{chat.name}</h1>
       </div>
 
       <div ref={menuRef} className="relative">
@@ -42,13 +58,13 @@ const ChatElement = () => {
           <div className="absolute right-0 mt-2 w-28 bg-white dark:bg-[#282a2e] rounded-md shadow-lg border border-gray-300 dark:border-gray-700 z-10">
             <button
               onClick={handleEdit}
-              className="block w-full cursor-pointer text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#3a3a3c]"
+              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#3a3a3c]"
             >
               Edit
             </button>
             <button
               onClick={handleDelete}
-              className="block w-full cursor-pointer text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-[#3a3a3c]"
+              className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-[#3a3a3c]"
             >
               Delete
             </button>

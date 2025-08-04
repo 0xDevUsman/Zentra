@@ -8,7 +8,7 @@ export const GET = async () => {
   try {
     const session = await getServerSession(authOptions);
     const userId = session?.user.id;
-
+    console.log(userId);
     if (!userId || !session) {
       return NextResponse.json({
         success: false,

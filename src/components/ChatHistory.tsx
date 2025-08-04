@@ -8,6 +8,7 @@ type ChatMessage = {
 };
 
 type chatprops = {
+  _id: string
   message: ChatMessage[];
   name: string;
 };

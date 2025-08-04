@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 import { useCallback } from "react";
 
 type ChatHistory = {
+  _id : string,
   name: string,
   message: [
     role: string,
@@ -24,7 +25,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const [chatHistory, setChatHistory] = useState([]);
 
 
@@ -34,6 +35,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setChatHistory(response.data?.data)
     }
   }, [])
+
+  const deletChat = async ()=>{
+
+  }
   return (
     <AppContext.Provider value={{ user, setUser, loading, setLoading, fetchChats, chatHistory }}>
       {children}

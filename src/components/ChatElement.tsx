@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
@@ -10,6 +11,7 @@ type ChatMessage = {
 };
 
 type ChatProps = {
+  _id: string,
   name: string;
   message: ChatMessage[];
 };
@@ -21,7 +23,7 @@ type Props = {
 const ChatElement = ({ chat }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
+  const router = useRouter();
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -42,9 +44,12 @@ const ChatElement = ({ chat }: Props) => {
     alert("Delete clicked for " + chat.name);
     setMenuOpen(false);
   };
-
+  const onclickChat = () => {
+    router.push(`/chat/${chat._id}`)
+  }
   return (
-    <div className="relative flex items-center justify-between px-4 py-4 bg-gray-50 dark:bg-[#1d1d20] cursor-pointer rounded-lg shadow-sm w-full mt-2">
+    <div
+      onClick={() => onclickChat()} className="relative flex items-center justify-between px-4 py-4 bg-gray-50 dark:bg-[#1d1d20] cursor-pointer rounded-lg shadow-sm w-full mt-2">
       <div>
         <h1 className="font-bold text-base">{chat.name}</h1>
       </div>

@@ -25,9 +25,9 @@ const Sidebar = () => {
     }, [userData, isImageLoading, showSkeleton]);
     return (
         <>
-            <div className='bg-white w-[350px] h-[95vh] flex flex-col items-start justify-center max-h-screen px-6 py-4 rounded-lg'>
+            <div className='bg-white w-1/4 h-[95vh] flex flex-col items-start justify-center max-h-screen px-6 py-4 rounded-lg'>
                 <div className='flex gap-x-2 items-center mt-4'>
-                    <Image src={logo} alt='logo' className='w-10' /> <span className='text-2xl font-medium'>ZEBTRA A.I + </span>
+                    <Image src={logo} alt='logo' className='w-10' /> <span className='text-2xl font-medium flex items-center gap-x-1'>ZENTRA A.I </span>
                 </div>
 
                 <div className='w-full flex justify-center items-center mt-4  hover:opacity-85'>

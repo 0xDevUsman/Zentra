@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect } from "react";
@@ -7,21 +8,23 @@ import ChatSection from "./ChatSection";
 import { usePathname } from "next/navigation";
 import NewChat from "./NewChat";
 import { useApp } from "@/context/ChatContext";
-import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 
 export default function Chat() {
-  const session = useSession();
-  console.log(session.data)
+  const { id } = useParams();
+  const chatId = id;
   const pathname = usePathname();
-  const { fetchChats, chatHistory, loading } = useApp();
-
+  const { fetchChats, chatHistory, loading, specificChat, fetchSpecificChatData } = useApp();
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
 
+  useEffect(() => {
+    fetchSpecificChatData(chatId);
+  }, [fetchSpecificChatData, chatId]);
+
   const showChatSection = /^\/chat\/[^/]+$/.test(pathname);
 
-  // Safely handle chatHistory mapping
   const mappedChatHistory = Array.isArray(chatHistory)
     ? chatHistory.map(chat => {
       try {
@@ -47,13 +50,29 @@ export default function Chat() {
     })
     : [];
 
+  const mappedSpecificChatHistory = specificChat?._id
+    ? [{
+      _id: specificChat._id,
+      name: specificChat.name,
+      message: specificChat.message.map((msg: any) => ({
+        content: {
+          _id: msg._id,
+          role: msg.role,
+          content: msg.content,
+          timestamp: msg.timeStamps || Date.now(),
+        },
+      })),
+    }]
+    : [];
+
+
   if (loading) return null;
 
   return (
     <div className="flex h-screen w-full dark:bg-[#282a2e] bg-white">
       <Sidebar />
       <ChatHistory chatHistory={mappedChatHistory} />
-      {showChatSection ? <ChatSection chatHistory={mappedChatHistory} /> : <NewChat />}
+      {showChatSection ? <ChatSection chatHistory={mappedSpecificChatHistory} /> : <NewChat />}
     </div>
   );
 }

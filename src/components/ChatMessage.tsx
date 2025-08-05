@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function ChatMessage({
   message,
   isSender,
 }: {
-  message: string;
+  message: any;
   isSender: boolean;
 }) {
   return (

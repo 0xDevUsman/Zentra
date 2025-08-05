@@ -94,6 +94,7 @@ export default function ChatInput({
         onClick={handleSend}
         className="ml-2 dark:text-white text-black transition-all duration-200"
         type="button"
+        disabled={!message.trim()}
         aria-label="Send message"
       >
         <IoSend size={22} />

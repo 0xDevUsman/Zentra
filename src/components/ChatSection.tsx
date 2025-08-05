@@ -3,14 +3,15 @@
 import React, { useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
+import { useApp } from "@/context/ChatContext";
 
 type ChatMessageType = {
   content: {
     _id: string,
-    role: string,
     content: string,
     timestamp?: number
   }
+  role: string,
 };
 
 type chatprops = {
@@ -23,13 +24,28 @@ type Props = {
   chatHistory: chatprops[];
 };
 
+
+// const LoadingDots = () => {
+//   return (
+//     <div className="flex space-x-1">
+//       <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
+//       <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+//       <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+//     </div>
+//   );
+// };
+
+
 const ChatSection = ({ chatHistory }: Props) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const { handleSendMessage } = useApp()
+
 
   // Scroll to bottom whenever chatHistory changes
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
+
 
   return (
     <div className="flex h-screen w-full lg:w-4/5 bg-white dark:bg-[#1e1f22] p-2 sm:p-4 md:p-6">
@@ -43,14 +59,14 @@ const ChatSection = ({ chatHistory }: Props) => {
             {chat.message.map((message, idx) => (
               <ChatMessage
                 key={idx}
-                message={message.content.content}
-                isSender={message.content.role === "user" ? true : false}
+                message={message.content}
+                isSender={message.role === "user"}
               />
             ))}
             <div ref={bottomRef} />
           </div>
           <div className="w-full border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1e1f22] p-4">
-            <ChatInput onSend={(msg) => console.log("Sent:", msg)} />
+            <ChatInput onSend={handleSendMessage} />
           </div>
         </div>
       ))}

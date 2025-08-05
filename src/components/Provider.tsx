@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
-import { AppProvider } from "@/context/ChatContext";
+import Loader from "@/components/Loader";
+import { AppProvider } from "@/context/ContextApi";
 
 interface ProvidersProps {
     children: React.ReactNode;
@@ -14,12 +14,20 @@ interface ProvidersProps {
 export function Providers({ children, session }: ProvidersProps) {
     return (
         <SessionProvider session={session}>
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-                <AppProvider>
+            <AppProvider>
+
+                <Suspense
+                    fallback={
+                        <div className="fixed inset-0 flex items-center justify-center">
+                            <Loader size={48} />
+                        </div>
+                    }
+                >
+
                     {children}
-                </AppProvider>
+                </Suspense>
                 <Toaster />
-            </ThemeProvider>
+            </AppProvider>
         </SessionProvider>
     );
 }

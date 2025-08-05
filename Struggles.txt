@@ -1,0 +1,1 @@
+1. All work properly but when connect to frontend i mainly copy paste from Ai tools like chat GPT then i need to build frontend from starting again because all are mess + UI/Ux not good.

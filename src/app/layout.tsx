@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning
-        className={`${inter.className} scroll-smooth antialiased bg-white dark:bg-black text-black dark:text-white transition-colors duration-100`}
+        className={`${inter.className} scroll-smooth antialiased bg-[#f0f1f2] dark:bg-black text-black dark:text-white transition-colors duration-100`}
       >
         <Providers session={session}>{children}</Providers>
       </body>

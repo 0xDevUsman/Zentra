@@ -10,7 +10,11 @@ import { RxAvatar } from "react-icons/rx";
 import { useApp } from '@/context/ContextApi';
 
 
-const Sidebar = () => {
+interface SidebarProps {
+    onOpenSettings: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
 
     const { userData } = useApp();
     console.log(userData?.image)
@@ -59,7 +63,8 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                <div className='flex gap-x-1 items-center cursor-pointer w-full hover:bg-gray-100 transition-colors duration-100 px-2 py-2 rounded-3xl mt-2'>
+                <div onClick={onOpenSettings}
+                    className='flex gap-x-1 items-center cursor-pointer w-full hover:bg-gray-100 transition-colors duration-100 px-2 py-2 rounded-3xl mt-2'>
                     <AiOutlineSetting size={36} className='p-2 cursor-pointer transition-colors duration-100 rounded-full bg-gray-200' />
                     <h1 className='text-base font-medium'>Settings</h1>
                 </div>

@@ -1,13 +1,19 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from './Sidebar';
 import ChatSection from './ChatSection';
+import SettingsModal from './SettingsModal';
+
 
 const Chat = () => {
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+
     return (
         <>
-            <div className="p-4 w-full flex gap-x-4">
-                <Sidebar />
+            {isSettingsOpen && <SettingsModal onClose={() => setIsSettingsOpen(false)} />}
+            <div className="relative p-4 w-full flex gap-x-4">
+                <Sidebar onOpenSettings={() => setIsSettingsOpen(true)}  />
                 <ChatSection />
             </div>
         </>

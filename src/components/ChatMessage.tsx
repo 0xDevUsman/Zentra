@@ -13,10 +13,7 @@ interface ChatMessageProps {
   avatar?: string;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({
-  message,
-  sender,
-}) => {
+const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
   const isUser = sender === 'user';
   const [copied, setCopied] = useState(false);
 
@@ -26,10 +23,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
       setCopied(true);
       toast.success("Copied");
       setTimeout(() => setCopied(false), 1500);
-
     } catch (err) {
       console.error("Failed to copy:", err);
-      toast.error("Something Wrong")
+      toast.error("Something went wrong");
     }
   };
 
@@ -40,26 +36,26 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
       transition={{ duration: 0.3 }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4 mx-4`}
     >
-      <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-xs md:max-w-[90%] relative group`}>
+      <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-xs sm:max-w-5xl relative group`}>
         {!isUser && (
-          <span className="flex items-center gap-x-2 text-xs font-medium text-gray-500 mb-1">
+          <span className="flex items-center gap-x-2 text-xs font-medium text-gray-500 mb-1 select-none">
             <Image src={logo} alt='logo' className='w-6 h-6' /> zentra
           </span>
         )}
 
-        <div className={`px-4 py-2 rounded-2xl relative ${isUser
-          ? 'bg-indigo-600 text-white rounded-br-none'
-          : 'text-gray-800 bg-gray-100 rounded-md'
-          }`}
+        <div
+          className={`px-4 py-2 rounded-2xl relative ${isUser ? 'bg-indigo-600 text-white rounded-br-none' : 'text-gray-800 bg-gray-100 rounded-md'
+            }`}
         >
-          <p className="text-sm md:text-base">{message}</p>
+          <p className="text-sm sm:text-sm whitespace-pre-wrap p-2">{message}</p>
 
           {/* Copy Icon */}
           {!isUser && (
             <button
               onClick={handleCopy}
-              className="absolute top-0 -right-2 text-gray-400 hover:text-gray-600 transition opacity-0 group-hover:opacity-100"
+              className="absolute top-0 -right-2 text-gray-400 hover:text-gray-600 transition opacity-0 group-hover:opacity-100 focus:opacity-100"
               title="Copy message"
+              aria-label="Copy message"
             >
               {copied ? <FiCheck size={16} className='cursor-pointer' /> : <FiCopy size={16} className='cursor-pointer' />}
             </button>

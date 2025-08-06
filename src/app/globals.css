@@ -50,4 +50,13 @@
   .dark .custom-scrollbar:hover {
     scrollbar-color: #6b7280 transparent;
   }
+
+  /* Hide scrollbar globally on the container */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

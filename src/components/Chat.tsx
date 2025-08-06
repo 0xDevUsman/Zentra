@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import ChatSection from './ChatSection';
 import SettingsModal from './SettingsModal';
+import axios from 'axios';
 
 const Chat = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);

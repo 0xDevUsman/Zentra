@@ -3,8 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { BiMessageAltMinus } from "react-icons/bi";
 import { SlOptionsVertical } from "react-icons/sl";
+import { UserChat } from '@/types/types';
 
-const ChatElement = () => {
+const ChatElement = ({ _id, name }: UserChat) => {
   const [showEdit, setShowEdit] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -27,12 +28,14 @@ const ChatElement = () => {
 
   return (
     <div
+
+      onClick={() => console.log(_id)}
       className='w-full flex justify-between items-center my-1 px-2 hover:bg-gray-100 rounded-lg transition-colors duration-100'
     >
       {/* Left: Chat icon and title */}
       <div className='flex-1 flex gap-x-2 items-center font-medium cursor-pointer select-none truncate'>
         <BiMessageAltMinus className='font-light flex-shrink-0' size={20} />
-        <h1 className='truncate text-sm sm:text-base'>This is the Chat heading</h1>
+        <h1 className='truncate text-sm sm:text-base'>{name}</h1>
       </div>
 
       {/* Right: Options icon */}

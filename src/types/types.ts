@@ -11,3 +11,4 @@ export type UserChat = {
 };
 
 export type UserChatList = UserChat[];
+export type UserMessageList = userMessages[];

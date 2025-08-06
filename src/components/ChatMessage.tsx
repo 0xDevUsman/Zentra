@@ -1,20 +1,22 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css"; // or any other highlight.js theme CSS you like
+import { motion } from "framer-motion";
+import Image from "next/image";
 import logo from "@/assets/chat-gpt.png";
-import { FiCopy, FiCheck } from 'react-icons/fi';
-import toast from 'react-hot-toast';
+import { FiCopy, FiCheck } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 interface ChatMessageProps {
   message: string;
-  sender: 'user' | 'other';
-  avatar?: string;
+  sender: "user" | "assistant";
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
-  const isUser = sender === 'user';
+  const isUser = sender === "user";
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -24,8 +26,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
       toast.success("Copied");
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
-      console.error("Failed to copy:", err);
-      toast.error("Something went wrong");
+      toast.error("Failed to copy");
     }
   };
 
@@ -34,22 +35,28 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4 mx-4`}
+      className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4 mx-4`}
     >
-      <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-lg sm:max-w-5xl relative group`}>
+      <div
+        className={`flex flex-col ${
+          isUser ? "items-end" : "items-start"
+        } max-w-lg sm:max-w-5xl relative group`}
+      >
         {!isUser && (
           <span className="flex items-center gap-x-2 text-xs font-medium text-gray-500 mb-1 select-none">
-            <Image src={logo} alt='logo' className='w-6 h-6' /> zentra
+            <Image src={logo} alt="logo" className="w-6 h-6" /> zentra
           </span>
         )}
 
         <div
-          className={`sm:px-4 py-2 rounded-2xl relative w-full ${isUser ? 'bg-indigo-600 text-white rounded-br-none' : 'text-gray-800 bg-gray-100 rounded-md'
-            }`}
+          className={`sm:px-4 py-2 rounded-2xl relative w-full ${
+            isUser
+              ? "bg-indigo-600 text-white rounded-br-none"
+              : "text-gray-800 bg-gray-100 rounded-md"
+          }`}
         >
-          <p className="text-xs sm:text-sm whitespace-pre-wrap p-2">{message}</p>
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{message}</ReactMarkdown>
 
-          {/* Copy Icon */}
           {!isUser && (
             <button
               onClick={handleCopy}
@@ -57,7 +64,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
               title="Copy message"
               aria-label="Copy message"
             >
-              {copied ? <FiCheck size={16} className='cursor-pointer' /> : <FiCopy size={16} className='cursor-pointer' />}
+              {copied ? (
+                <FiCheck size={16} className="cursor-pointer" />
+              ) : (
+                <FiCopy size={16} className="cursor-pointer" />
+              )}
             </button>
           )}
         </div>

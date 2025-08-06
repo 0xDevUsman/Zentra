@@ -32,14 +32,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800"
+          className="absolute cursor-pointer top-3 right-4 text-2xl text-gray-500 hover:text-gray-800"
           aria-label="Close settings"
         >
           ✕
         </button>
 
         {/* Left Sidebar */}
-        <div className="w-full md:w-1/3 bg-gray-100 p-4 sm:p-6 border-b md:border-b-0 md:border-r">
+        <div className="w-full md:w-1/3 bg-gray-100 p-4 sm:p-6">
           <h2 className="text-lg font-semibold mb-4">Settings</h2>
           <ul className="space-y-2">
             <li className="font-medium text-indigo-600 cursor-pointer hover:underline">General</li>
@@ -79,7 +79,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
               <input
                 type="text"
                 id="name"
-                className={`w-full px-3 py-2 border rounded-md ${isEditing
+                className={`w-full px-3 py-2 border outline-none rounded-md ${isEditing
                   ? "border-indigo-600"
                   : "border-gray-200 bg-gray-100 outline-none cursor-not-allowed"
                   }`}
@@ -96,7 +96,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
               <input
                 type="email"
                 id="email"
-                className={`w-full px-3 py-2 border rounded-md ${isEditing
+                className={`w-full px-3 py-2 border outline-none rounded-md ${isEditing
                   ? "border-indigo-600"
                   : "border-gray-200 bg-gray-100 outline-none cursor-not-allowed"
                   }`}
@@ -108,7 +108,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
             <button
               type="submit"
-              className="self-start px-6 py-2 rounded-md text-white font-semibold bg-[#5661f6] hover:bg-indigo-600"
+              className="self-start cursor-pointer px-6 py-2 rounded-md text-white font-semibold bg-[#5661f6] hover:bg-indigo-600"
             >
               {isEditing ? "Save Changes" : "Edit Profile"}
             </button>

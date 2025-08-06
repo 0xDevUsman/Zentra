@@ -147,10 +147,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             <div className='w-full h-0.5 bg-gray-200 mt-4' />
 
             <div className="w-full mt-3 h-[calc(100vh-260px)] overflow-y-auto custom-scrollbar space-y-2">
-                {userChat?.map((data : UserChat, idx : number) => {
+                {userChat?.map((data: UserChat) => {
                     return (
-                        <div key={idx}>
-                            <ChatElement _id={data._id || "_id Not Found"} name={data.name || "Name Not FOund"} />
+                        <div key={data._id}>
+                            <ChatElement _id={data._id || "_id Not Found"} name={data.name || "Name Not Found"} />
                         </div>
                     )
                 })}

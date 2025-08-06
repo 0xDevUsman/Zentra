@@ -3,7 +3,7 @@ import ChatMessage from './ChatMessage';
 
 const ChatWithId = () => {
     return (
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-6xl md:max-w-4xl mx-auto px-4">
             <ChatMessage message="Hello there! How are you doing today?" sender="user" />
             <ChatMessage message="I am Fine !" sender="other" />
             <ChatMessage message="Hello there! How are you doing today?" sender="user" />

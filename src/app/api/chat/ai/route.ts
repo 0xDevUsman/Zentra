@@ -29,7 +29,28 @@ export const POST = async (req: Request) => {
     await connectDB();
     const { chatId, prompt } = await req.json();
 
+    if (!chatId || !prompt) {
+      return NextResponse.json(
+        { success: false, message: "Missing chatId or prompt" },
+        { status: 400 }
+      );
+    }
+
+    if (!prompt.trim()) {
+      return NextResponse.json(
+        { success: false, message: "Prompt cannot be empty" },
+        { status: 400 }
+      );
+    }
+
     const data = await Chat.findOne({ userId, _id: chatId });
+    if (!data) {
+      return NextResponse.json(
+        { success: false, message: "Chat not found" },
+        { status: 404 }
+      );
+    }
+
     const userPrompt = {
       role: "user",
       content: String(prompt),
@@ -56,13 +77,14 @@ export const POST = async (req: Request) => {
     console.log(messageWithTimestamp);
 
     data?.message.push(messageWithTimestamp);
-    data?.save();
+    await data?.save();
 
     return NextResponse.json({
       success: true,
       data: messageWithTimestamp,
     });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({
       success: false,
       error: (error as Error).message,

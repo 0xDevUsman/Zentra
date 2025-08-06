@@ -16,8 +16,6 @@ export const POST = async () => {
     const userId = session.user.id;
     console.log(userId);
 
-    //Prepare the chat data to be saved in the database
-
     const chatData = {
       userId,
       message: [],
@@ -25,9 +23,13 @@ export const POST = async () => {
     };
 
     await connectDB();
-    await Chat.create(chatData);
+    const newChat = await Chat.create(chatData);
 
-    return NextResponse.json({ message: "Chat Created", success: true });
+    return NextResponse.json({
+      message: "Chat Created",
+      success: true,
+      newChat: newChat._id,
+    });
   } catch (error) {
     return NextResponse.json({
       error: (error as Error).message,

@@ -6,16 +6,15 @@ import { connectDB } from "@/lib/db";
 
 interface Input {
   chatId: string;
-  name: string;
 }
 
-export const PATCH = async (req: Request) => {
+export const DELETE = async (req: Request) => {
   try {
+    await connectDB();
     const session = await getServerSession(authOptions);
     const userId = session?.user.id;
-    console.log(userId);
+    console.log("Session:", session);
 
-    await connectDB();
     if (!userId) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
@@ -24,22 +23,18 @@ export const PATCH = async (req: Request) => {
     }
 
     const body: Input = await req.json();
-    const { chatId, name } = body;
+    const { chatId } = body;
 
-    const updatedChat = await Chat.findOneAndUpdate(
-      { _id: chatId, userId },
-      { name },
-      { new: true }
-    );
+    const deleteChat = await Chat.deleteOne({ _id: chatId, userId });
 
-    if (!updatedChat) {
+    if (deleteChat.deletedCount === 0) {
       return NextResponse.json(
         { success: false, message: "Chat not found or access denied" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, message: "Chat renamed" });
+    return NextResponse.json({ success: true, message: "Chat deleted" });
   } catch (error) {
     return NextResponse.json(
       {

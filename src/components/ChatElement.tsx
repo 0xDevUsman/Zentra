@@ -7,6 +7,7 @@ import { UserChat } from '@/types/types';
 import axios from 'axios';
 import { useApp } from '@/context/ContextApi';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const ChatElement = ({ _id, name }: UserChat) => {
   const [showEdit, setShowEdit] = useState(false);
@@ -17,6 +18,7 @@ const ChatElement = ({ _id, name }: UserChat) => {
   const { fetchChats } = useApp();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,7 +83,7 @@ const ChatElement = ({ _id, name }: UserChat) => {
   // Handle delete confirm click
   const handleConfirmDelete = async () => {
     try {
-      const deleted = await axios.delete("/api/chat/delete", {
+      const deleted = await axios.delete(`/api/chat/delete/${_id}`, {
         data: {
           chatId: _id
         }
@@ -105,11 +107,13 @@ const ChatElement = ({ _id, name }: UserChat) => {
   };
 
   return (
-    <Link href={`/chat/${_id}`}
+    <div
       className='w-full flex justify-between items-center my-1 px-2 hover:bg-gray-100 rounded-lg transition-colors duration-100'
     >
       {/* Left: Icon + Name or Input */}
-      <div className='flex-1 flex gap-x-2 items-center font-medium cursor-pointer select-none truncate'>
+      <div
+        onClick={() => router.push(`/chat/${_id}`)}
+        className='flex-1 flex gap-x-2 items-center font-medium cursor-pointer select-none truncate'>
         <BiMessageAltMinus className='font-light flex-shrink-0' size={20} />
         {isEditing ? (
           <input
@@ -178,7 +182,7 @@ const ChatElement = ({ _id, name }: UserChat) => {
           </div>
         )}
       </div>
-    </Link>
+    </div>
   );
 };
 

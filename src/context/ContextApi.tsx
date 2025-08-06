@@ -2,6 +2,7 @@ import { createContext, useContext, useState, ReactNode, useEffect, useCallback 
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { UserChat } from '@/types/types';
+import toast from 'react-hot-toast';
 
 type UserData = {
     id: string;
@@ -18,6 +19,7 @@ type AppContextType = {
     userChat: UserChat[] | null;
     setUserChat: (data: UserChat[] | null) => void;
     fetchChats: () => Promise<void>;
+    deleteChats: () => Promise<void>;
 };
 
 
@@ -52,9 +54,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [])
 
+    {/*Delete All Chat*/ }
+
+    const deleteChats = async () => {
+        try {
+            const response = await axios.delete("/api/chat/delete");
+            if (response.data.success) {
+                await fetchChats();
+                toast.success("Clear Chats :)");
+            }
+            else {
+                toast.error("Not able to delete :(")
+            }
+        } catch (error) {
+            toast.error("somethign went Wrong | Nothing Chat Left")
+            console.log(error)
+        }
+    }
 
     return (
-        <AppContext.Provider value={{ userData, setUserData, fetchChats, userChat, setUserChat }}>
+        <AppContext.Provider value={{ userData, setUserData, fetchChats, userChat, setUserChat, deleteChats }}>
             {children}
         </AppContext.Provider>
     );

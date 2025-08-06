@@ -114,7 +114,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     isImageLoading,
     setIsImageLoading,
 }) => {
-    const { fetchChats, userChat } = useApp();
+    const { fetchChats, userChat, deleteChats } = useApp();
     useEffect(() => {
         fetchChats();
     }, [fetchChats])
@@ -140,7 +140,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
             <div className="w-full flex items-center justify-between px-4 pt-3">
                 <h3 className="text-sm font-medium text-gray-500">Your Conversations</h3>
-                <button className="text-xs font-medium text-blue-600 hover:text-blue-500 transition-colors">
+                <button onClick={() => deleteChats()} className="text-xs cursor-pointer font-medium text-blue-600 hover:text-blue-500 transition-colors">
                     Clear All
                 </button>
             </div>

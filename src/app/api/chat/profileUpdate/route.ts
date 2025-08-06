@@ -1,11 +1,10 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { Chat } from "@/models/chat";
 import { connectDB } from "@/lib/db";
+import { User } from "@/models/user";
 
 interface Input {
-  chatId: string;
   name: string;
 }
 
@@ -24,22 +23,22 @@ export const PATCH = async (req: Request) => {
     }
 
     const body: Input = await req.json();
-    const { chatId, name } = body;
+    const { name } = body;
 
-    const updatedChat = await Chat.findOneAndUpdate(
-      { _id: chatId, userId },
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
       { name },
       { new: true }
     );
 
-    if (!updatedChat) {
+    if (!updatedUser) {
       return NextResponse.json(
-        { success: false, message: "Chat not found or access denied" },
+        { success: false, message: "User not found or access denied" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, message: "Chat renamed" });
+    return NextResponse.json({ success: true, message: "User renamed" });
   } catch (error) {
     return NextResponse.json(
       {

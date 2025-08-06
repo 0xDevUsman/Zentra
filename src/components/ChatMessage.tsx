@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css"; // or any other highlight.js theme CSS you like
+import "highlight.js/styles/github-dark.css";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import logo from "@/assets/chat-gpt.png";
@@ -27,6 +27,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
       toast.error("Failed to copy");
+      console.log(err)
     }
   };
 
@@ -38,9 +39,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
       className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4 mx-4`}
     >
       <div
-        className={`flex flex-col ${
-          isUser ? "items-end" : "items-start"
-        } max-w-lg sm:max-w-5xl relative group`}
+        className={`flex flex-col ${isUser ? "items-end" : "items-start"
+          } max-w-lg sm:max-w-5xl relative group`}
       >
         {!isUser && (
           <span className="flex items-center gap-x-2 text-xs font-medium text-gray-500 mb-1 select-none">
@@ -49,11 +49,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
         )}
 
         <div
-          className={`sm:px-4 py-2 rounded-2xl relative w-full ${
-            isUser
-              ? "bg-indigo-600 text-white rounded-br-none"
-              : "text-gray-800 bg-gray-100 rounded-md"
-          }`}
+          className={`sm:px-4 py-2 rounded-2xl relative w-full ${isUser
+            ? "bg-indigo-600 text-white rounded-br-none"
+            : "text-gray-800 bg-gray-100 rounded-md"
+            }`}
         >
           <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{message}</ReactMarkdown>
 

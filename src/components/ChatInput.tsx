@@ -16,7 +16,6 @@ interface ChatInputProps {
 const ChatInput: React.FC<ChatInputProps> = ({
     chatId,
     setChatId,
-    messages,
     setMessages,
 }) => {
     const [message, setMessage] = useState("");

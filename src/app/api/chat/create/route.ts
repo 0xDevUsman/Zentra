@@ -6,6 +6,7 @@ import { Chat } from "@/models/chat";
 export const POST = async () => {
   try {
     const session = await getServerSession(authOptions);
+    console.log(session);
 
     if (!session) {
       return NextResponse.json(
@@ -14,7 +15,7 @@ export const POST = async () => {
       );
     }
     const userId = session.user.id;
-    console.log(userId);
+    console.log("helo user id " + userId);
 
     const chatData = {
       userId,
@@ -28,12 +29,13 @@ export const POST = async () => {
     return NextResponse.json({
       message: "Chat Created",
       success: true,
-      newChat: newChat._id,
+      chatId: newChat._id,
     });
   } catch (error) {
     return NextResponse.json({
       error: (error as Error).message,
       success: false,
+      message: "Something went wrong",
     });
   }
 };

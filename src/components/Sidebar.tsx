@@ -121,7 +121,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     useEffect(() => {
         fetchChats();
     }, [fetchChats])
-    console.log(userChat)
     return (
 
         <>

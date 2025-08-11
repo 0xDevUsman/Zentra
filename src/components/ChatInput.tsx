@@ -1,20 +1,81 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios";
 import { MdOutlineSend } from "react-icons/md";
+import { usePathname } from "next/navigation";
+import { userMessages } from "@/types/types";
+import { useRouter } from "next/navigation";
 
-const ChatInput = () => {
+interface ChatInputProps {
+    chatId: string | null;
+    setChatId: (id: string) => void;
+    messages: userMessages[];
+    setMessages: React.Dispatch<React.SetStateAction<userMessages[]>>;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({
+    chatId,
+    setChatId,
+    messages,
+    setMessages,
+}) => {
     const [message, setMessage] = useState("");
+    const pathname = usePathname();
+    const router = useRouter();
 
-    const handleSend = () => {
-        if (message.trim()) {
-            console.log("Send message:", message);
-            setMessage("");
+    const handleSend = async () => {
+        if (!message.trim()) return;
+
+        try {
+            let currentChatId = chatId;
+
+            if (!currentChatId) {
+                const chatIdFromUrlMatch = pathname.match(/^\/chat\/([a-zA-Z0-9]+)$/);
+                currentChatId = chatIdFromUrlMatch ? chatIdFromUrlMatch[1] : null;
+                if (currentChatId) setChatId(currentChatId);
+            }
+
+            if (!currentChatId) {
+                const createResponse = await axios.post("/api/chat/create");
+                if (createResponse.data.success) {
+                    currentChatId = createResponse.data.chatId;
+                    setChatId(currentChatId || "");
+                } else {
+                    console.log(currentChatId)
+                    console.error("Failed to create chat:", createResponse.data.message || createResponse.data.error || "Unknown error");
+                    return;
+                }
+            }
+
+            // Now send message to AI
+            const aiResponse = await axios.post("/api/chat/ai", {
+                chatId: currentChatId,
+                prompt: message,
+            });
+
+            if (aiResponse.data.success) {
+                setMessages((prev) => [
+                    ...prev,
+                    { role: "user", content: message, timeStamp: Date.now() },
+                    aiResponse.data.data,
+                ]);
+                setMessage("");
+                router.push(`/chat/${currentChatId}`);
+            } else {
+                console.error("AI error:", aiResponse.data.message || aiResponse.data.error);
+            }
+
+
+        } catch (err) {
+            console.error("Error sending message:", err);
         }
     };
 
+
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault(); // Prevent newline on Enter
+            e.preventDefault();
             handleSend();
         }
     };

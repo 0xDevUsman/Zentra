@@ -1,43 +1,25 @@
-"use Client";
+"use client";
 
+import React from "react";
+import ChatMessage from "./ChatMessage";
+import { userMessages } from "@/types/types";
 
-import React, { useEffect, useState } from 'react';
-import ChatMessage from './ChatMessage';
-import axios from 'axios';
-import { useParams } from 'next/navigation';
-import { userMessages } from '@/types/types';
+interface ChatWithIdProps {
+    messages: userMessages[];
+}
 
-const ChatWithId = () => {
-    const [message, setMessage] = useState<userMessages[]>();
-
-    const { id } = useParams();
-
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await axios.get(`/api/chat/get/${id}`)
-                if (response.data?.success) {
-                    setMessage(response.data.data.message)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-        fetchMessages();
-    }, [id])
-    console.log(message)
+const ChatWithId: React.FC<ChatWithIdProps> = ({ messages }) => {
     return (
         <div className="max-w-6xl md:max-w-4xl mx-auto px-4">
-            {
-                message?.map((message: userMessages, idx: number) => {
-                    return (
-                        <div key={idx}>
-                            <ChatMessage message={message?.content} sender={message?.role} />
-                        </div>
-                    )
-                })
-            }
+            {messages.length === 0 && (
+                <p className="text-center text-gray-500 mt-10">No messages yet.</p>
+            )}
+
+            {messages.map((msg, idx) => (
+                <div key={idx}>
+                    <ChatMessage message={msg.content} sender={msg.role} />
+                </div>
+            ))}
         </div>
     );
 };

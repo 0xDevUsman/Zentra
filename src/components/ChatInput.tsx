@@ -39,6 +39,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 if (createResponse.data.success) {
                     currentChatId = createResponse.data.chatId;
                     setChatId(currentChatId || "");
+                    router.push(`/chat/${currentChatId}`);
                 } else {
                     console.log(currentChatId)
                     console.error("Failed to create chat:", createResponse.data.message || createResponse.data.error || "Unknown error");
@@ -59,7 +60,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     aiResponse.data.data,
                 ]);
                 setMessage("");
-                router.push(`/chat/${currentChatId}`);
             } else {
                 console.error("AI error:", aiResponse.data.message || aiResponse.data.error);
             }

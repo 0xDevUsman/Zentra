@@ -17,7 +17,7 @@ const ChatWithId: React.FC<ChatWithIdProps> = ({ messages }) => {
 
             {messages.map((msg, idx) => (
                 <div key={idx}>
-                    <ChatMessage message={msg.content} sender={msg.role} />
+                    <ChatMessage message={msg} />
                 </div>
             ))}
         </div>

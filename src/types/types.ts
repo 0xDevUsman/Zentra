@@ -1,6 +1,8 @@
 export type userMessages = {
   content: string;
   role: "user" | "assistant";
+  isLoading?: boolean;
+  timeStamp?: number;
 };
 
 export type UserChat = {

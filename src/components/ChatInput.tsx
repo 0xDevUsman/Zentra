@@ -41,34 +41,51 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     setChatId(currentChatId || "");
                     router.push(`/chat/${currentChatId}`);
                 } else {
-                    console.log(currentChatId)
-                    console.error("Failed to create chat:", createResponse.data.message || createResponse.data.error || "Unknown error");
+                    console.error("Failed to create chat:", createResponse.data.message || createResponse.data.error);
                     return;
                 }
             }
 
-            // Now send message to AI
+            const userMsg: userMessages = { role: "user", content: message, isLoading: false };
+            const tempLoaderMsg: userMessages = { role: "assistant", content: "⏳ Typing...", isLoading: true };
+
+            // 1️⃣ Show user message immediately + loader for AI
+            setMessages((prev) => [...prev, userMsg, tempLoaderMsg]);
+
+            setMessage("");
+
+            // 2️⃣ Call AI API
             const aiResponse = await axios.post("/api/chat/ai", {
                 chatId: currentChatId,
                 prompt: message,
             });
 
             if (aiResponse.data.success) {
-                setMessages((prev) => [
-                    ...prev,
-                    { role: "user", content: message, timeStamp: Date.now() },
-                    aiResponse.data.data,
-                ]);
-                setMessage("");
+                setMessages((prev) =>
+                    prev.map((msg) =>
+                        msg.isLoading ? aiResponse.data.data : msg
+                    )
+                );
             } else {
-                console.error("AI error:", aiResponse.data.message || aiResponse.data.error);
+                setMessages((prev) =>
+                    prev.map((msg) =>
+                        msg.isLoading
+                            ? {
+                                role: "assistant",
+                                content: "⚠️ Failed to get response",
+                                isLoading: false,
+                                timeStamp: Date.now(),
+                            } as userMessages
+                            : msg
+                    )
+                );
             }
-
 
         } catch (err) {
             console.error("Error sending message:", err);
         }
     };
+
 
 
 

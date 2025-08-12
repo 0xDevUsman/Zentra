@@ -117,7 +117,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     isImageLoading,
     setIsImageLoading,
 }) => {
+
     const { fetchChats, userChat, deleteChats } = useApp();
+
     useEffect(() => {
         fetchChats();
     }, [fetchChats])
@@ -156,7 +158,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         </div>
                     )
                 })}
-
             </div>
 
             <div

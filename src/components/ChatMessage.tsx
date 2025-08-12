@@ -52,7 +52,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
         <div
           className={`sm:px-4 py-2 rounded-2xl relative w-full ${isUser
-            ? "bg-indigo-600 text-white rounded-br-none"
+            ? "bg-indigo-600 text-white rounded-br-none px-4"
             : "text-gray-800 bg-gray-100 rounded-md"
             }`}
         >
@@ -70,7 +70,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
               title="Copy message"
               aria-label="Copy message"
             >
-              {copied ? <FiCheck size={16} /> : <FiCopy size={16} />}
+              {copied ? <FiCheck size={16} className="cursor-pointer" /> : <FiCopy size={16} className="cursor-pointer" />}
             </button>
           )}
         </div>

@@ -11,6 +11,7 @@ const ChatSection = () => {
     const isChatIdPage = /^\/chat\/[a-zA-Z0-9]+$/.test(pathname);
     const [messages, setMessages] = useState<userMessages[]>([]);
     const [chatId, setChatId] = useState<string | null>(null);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         if (isChatIdPage) {
@@ -29,7 +30,10 @@ const ChatSection = () => {
 
 
     useEffect(() => {
-        if (!chatId) return;
+        if (!chatId) {
+            setMessages([]);
+            return;
+        }
 
         const fetchMessages = async () => {
             try {
@@ -43,7 +47,7 @@ const ChatSection = () => {
         };
 
         fetchMessages();
-    }, [chatId]);
+    }, [chatId, refreshTrigger]);
 
     console.log(chatId)
     return (
@@ -68,6 +72,7 @@ const ChatSection = () => {
                     setChatId={setChatId}
                     messages={messages}
                     setMessages={setMessages}
+                    onMessageSent={() => setRefreshTrigger((prev) => prev + 1)}
                 />
             </div>
         </div>

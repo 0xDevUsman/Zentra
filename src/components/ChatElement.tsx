@@ -6,7 +6,6 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { UserChat } from '@/types/types';
 import axios from 'axios';
 import { useApp } from '@/context/ContextApi';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const ChatElement = ({ _id, name }: UserChat) => {

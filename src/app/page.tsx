@@ -10,7 +10,7 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "loading") return; // still checking
+    if (status === "loading") return;
     if (!session) {
       router.replace("/signin");
     } else {

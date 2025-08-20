@@ -32,14 +32,12 @@ const ChatInput: React.FC<ChatInputProps> = ({
             let currentChatId = chatId;
             const isNewChat = !currentChatId;
 
-            // Check URL for chatId if not in props
             if (isNewChat) {
                 const chatIdFromUrlMatch = pathname.match(/^\/chat\/([a-zA-Z0-9]+)$/);
                 currentChatId = chatIdFromUrlMatch ? chatIdFromUrlMatch[1] : null;
                 if (currentChatId) setChatId(currentChatId);
             }
 
-            // Create user message and loading indicator
             const userMsg: userMessages = {
                 role: "user",
                 content: message,
@@ -53,34 +51,27 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 timeStamp: Date.now(),
             };
 
-            // Update messages immediately
             setMessages((prev) => [...prev, userMsg, tempLoaderMsg]);
             setMessage("");
 
-            // Create new chat if needed
             if (isNewChat) {
                 const createResponse = await axios.post("/api/chat/create");
                 if (createResponse.data.success) {
                     currentChatId = createResponse.data.chatId;
                     setChatId(currentChatId || "");
 
-                    // 3️⃣ Push new chat URL (navigation)
                     router.push(`/chat/${currentChatId}`);
 
-                    // 4️⃣ Wait a tiny bit for navigation to happen
-                    // (Optional: you might want to delay AI call until after navigation completes)
                 } else {
                     throw new Error("Failed to create chat");
                 }
             }
 
-            // Get AI response
             const aiResponse = await axios.post("/api/chat/ai", {
                 chatId: currentChatId,
                 prompt: message,
             });
 
-            // 6️⃣ Update loader message with AI response
             if (aiResponse.data.success) {
                 setMessages((prev) =>
                     prev.map((msg) =>
@@ -90,7 +81,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     )
 
                 );
-                // Reload the page after a short delay
                 setTimeout(() => {
                     window.location.reload();
                 }, 500);

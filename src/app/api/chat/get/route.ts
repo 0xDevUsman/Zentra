@@ -20,7 +20,7 @@ export const GET = async () => {
 
     await connectDB();
 
-    const data = await Chat.find({ userId }).sort({ timestamp: -1 }); // newest first
+    const data = await Chat.find({ userId }).sort({ timestamp: -1 });
 
     return NextResponse.json({
       success: true,

@@ -79,7 +79,6 @@ const ChatElement = ({ _id, name }: UserChat) => {
     if (e.key === "Escape") setIsEditing(false);
   };
 
-  // Handle delete confirm click
   const handleConfirmDelete = async () => {
     try {
       const deleted = await axios.delete(`/api/chat/delete/${_id}`, {

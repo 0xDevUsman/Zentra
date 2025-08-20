@@ -8,11 +8,9 @@
 
 - 🔥 **Beautiful Landing Page** with hero heading and CTA
 - 💬 **Chat Interface** with animated message bubbles
-- 🧠 **AI Personalities** — user can select different AI behavior presets
 - 📁 **Responsive Sidebar** showing chat history and new chat option
 - 👤 **User Authentication** (login/signup with session management)
 - 🧾 **Chat Persistence** — stores chats using MongoDB
-- 🎨 **Dark Mode by Default** with toggle to light mode
 - ⚡ **Smooth Animations** using Framer Motion
 - 📱 **Fully Responsive** for all devices
 

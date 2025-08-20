@@ -1,9 +1,17 @@
-import { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
+
+declare module "next-auth" {
+  interface JWT {
+    id?: string;
+    email: string;
+  }
+}
+
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { connectDB } from "@/lib/db";
-import { User } from "@/models/user";
+import { User as UserModel } from "@/models/user";
 import bcrypt from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
@@ -20,7 +28,7 @@ export const authOptions: NextAuthOptions = {
         const password = credentials?.password;
         if (!email || !password) return null;
 
-        const user = await User.findOne({ email }).select("+password");
+        const user = await UserModel.findOne({ email }).select("+password");
         if (!user) throw new Error("Invalid email or password.");
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) throw new Error("Invalid email or password.");
@@ -55,10 +63,10 @@ export const authOptions: NextAuthOptions = {
       await connectDB();
 
       if (account?.provider !== "credentials") {
-        const existingUser = await User.findOne({ email: user.email });
+        const existingUser = await UserModel.findOne({ email: user.email });
         if (!existingUser) {
           try {
-            const newUser = new User({
+            const newUser = new UserModel({
               email: user.email,
               provider: account?.provider,
             });
@@ -74,15 +82,13 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        // Find user by email to get MongoDB _id regardless of provider
-        const dbUser = await User.findOne({ email: user.email }).lean();
+        const dbUser = await UserModel.findOne({ email: user.email }).lean();
         if (dbUser && dbUser._id) {
-          token.id = dbUser._id.toString(); // MongoDB ObjectId as string
+          token.id = dbUser._id.toString();
           token.email = dbUser.email;
         } else {
-          // fallback: for safety if user not found in DB (rare)
-          token.id = user.id; // provider id
-          token.email = user.email;
+          token.id = user.id;
+          token.email = user.email!;
         }
       }
       return token;
@@ -90,12 +96,11 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       if (token?.id && session.user) {
-        session.user.id = token.id as string; // MongoDB ObjectId string here
-        session.user.email = token.email as string;
+        session.user.id = token.id;
+        session.user.email = token.email;
       }
       return session;
     },
   },
-
   secret: process.env.NEXTAUTH_SECRET,
 };

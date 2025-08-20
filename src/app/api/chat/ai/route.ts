@@ -2,7 +2,7 @@ export const maxDuration = 120;
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { Chat } from "@/models/chat";
 import { connectDB } from "@/lib/db";
 
@@ -17,8 +17,10 @@ const openai = new OpenAI({
 
 export const POST = async (req: Request) => {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    const session = (await getServerSession(authOptions)) as {
+      user?: { id?: string };
+    } | null;
+    const userId = session?.user?.id;
     if (!userId || !session) {
       return NextResponse.json({
         success: false,

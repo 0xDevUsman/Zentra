@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { Chat } from "@/models/chat";
@@ -7,8 +7,10 @@ import { connectDB } from "@/lib/db";
 export const DELETE = async () => {
   try {
     await connectDB();
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    const session = (await getServerSession(authOptions)) as {
+      user?: { id?: string };
+    } | null;
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json(

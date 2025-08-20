@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
@@ -10,8 +10,10 @@ interface Input {
 
 export const PATCH = async (req: Request) => {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    const session = (await getServerSession(authOptions)) as {
+      user?: { id?: string };
+    } | null;
+    const userId = session?.user?.id;
     console.log(userId);
 
     await connectDB();

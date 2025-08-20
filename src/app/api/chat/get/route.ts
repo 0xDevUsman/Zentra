@@ -1,13 +1,15 @@
 import { connectDB } from "@/lib/db";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { Chat } from "@/models/chat";
 
 export const GET = async () => {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    const session = (await getServerSession(authOptions)) as {
+      user?: { id?: string };
+    } | null;
+    const userId = session?.user?.id;
     console.log("user id " + userId);
     if (!userId || !session) {
       return NextResponse.json({

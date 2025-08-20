@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils'; // Assuming you're using a utility class merger
+import { cn } from '@/lib/utils';
 
 interface LoaderProps {
     size?: number;

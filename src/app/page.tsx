@@ -1,22 +1,28 @@
 "use client";
 
-import React from "react";
-const page = () => {
+import Loader from "@/components/Loader";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function Page() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "loading") return; // still checking
+    if (!session) {
+      router.replace("/signin");
+    } else {
+      router.replace("/chat");
+    }
+  }, [session, status, router]);
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[#F9F9F9] dark:bg-black">
-        <h1 className="text-center text-3xl text-black dark:text-white font-bold mt-10">
-          Hello Welcome !
-        </h1>
-        <button
-          className="bg-black dark:bg-white px-6 py-3 rounded-lg text-white dark:text-black mt-6 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-100 cursor-pointer"
-        >
-          Log Out
-        </button>
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#F9F9F9] dark:bg-black">
+      <h1 className="text-center text-3xl text-black dark:text-white font-bold mt-10">
+        <Loader size={48} />
+      </h1>
+    </div>
   );
-};
-
-export default page;
+}

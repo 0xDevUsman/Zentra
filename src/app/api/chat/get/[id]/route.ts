@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectDB } from "@/lib/db";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { Chat } from "@/models/chat";
 
 export const GET = async (req: Request, context: any) => {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    const session = (await getServerSession(authOptions)) as {
+      user?: { id?: string };
+    } | null;
+    const userId = session?.user?.id;
 
     if (!session || !userId) {
       return NextResponse.json(
